@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Protocols;
 using Models;
+using System.Configuration;
 
 namespace Repositories
 {
@@ -10,7 +12,7 @@ namespace Repositories
 
         public PedidoRepository()
         {
-            Conn = "Server=DESKTOP-6NSSVDC;Database=projAula4;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=Yes";
+            Conn = ConfigurationManager.ConnectionStrings["StringConnection"].ConnectionString;
         }
 
         public bool Inserir(Pedido pedido)
@@ -21,8 +23,10 @@ namespace Repositories
             using (var db = new SqlConnection(Conn))
             {
                 db.Open();
-                db.Execute("INSERT INTO TB_PEDIDO (Descricao, Mesa) values (@Descricao, @Mesa)", pedido);
-                //db.Execute("INSERT INTO TB_PEDIDO (Id, Descricao, Mesa) values (@pera, @uva, @abacate)", new { pera = "", uva = "", abacate = "" });
+                
+                db.Execute("INSERT INTO TB_PEDIDO (Descricao, Mesa, IdItem) values (@Descricao, @Mesa, @IdItem)", 
+                    new { Descricao = pedido.Descricao, Mesa = pedido.Mesa, IdItem = pedido.Item.Id });
+
                 status = true;
                 db.Close();
             }
