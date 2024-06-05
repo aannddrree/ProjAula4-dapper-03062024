@@ -3,7 +3,7 @@ using Controllers;
 using Models;
 
 Console.WriteLine("Inicio...");
-
+/*
 Pedido pedido = new Pedido
 {
     Id = 1,
@@ -19,7 +19,9 @@ if (new PedidoController().Inserir(pedido))
 else
 {
     Console.WriteLine("ERRO");
-}
+}*/
+
+new PedidoController().GetAll().ForEach(x => Console.WriteLine(x));
 
 
         

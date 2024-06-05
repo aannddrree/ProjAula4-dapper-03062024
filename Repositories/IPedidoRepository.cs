@@ -10,5 +10,7 @@ namespace Repositories
     public interface IPedidoRepository
     {
         bool Inserir(Pedido pedido);
+
+        List<Pedido> GetAll();
     }
 }

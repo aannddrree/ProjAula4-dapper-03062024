@@ -20,5 +20,10 @@ namespace Services
             pedido.Item.Id = idItem;
             return _pedidoRepository.Inserir(pedido);
         }
+
+        public List<Pedido> GetAll()
+        {
+            return _pedidoRepository.GetAll();
+        }
     }
 }

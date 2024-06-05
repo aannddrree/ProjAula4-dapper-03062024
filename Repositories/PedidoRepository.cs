@@ -33,5 +33,19 @@ namespace Repositories
             return status;
         }
 
+        public List<Pedido> GetAll()
+        {
+            using (var db = new SqlConnection(Conn))
+            {
+                db.Open();
+                var pedidos =  db.Query<Pedido, Item, Pedido>(Pedido.GETALL, (pedido, item) =>
+                {
+                    pedido.Item = item;
+                    return pedido;
+                }, splitOn: "Id");
+                return (List<Pedido>) pedidos;
+            }
+        }
+
     }
 }
